@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import { connectDB } from "./config/db.js"
 
 // App Config
 
@@ -10,6 +11,10 @@ const port = 4000
 app.use(express.json())
 app.use(cors())
 
+// DB Connection
+
+connectDB();
+
 app.get("/",(req,res)=>{
     res.send("API Working")
 })
@@ -17,5 +22,3 @@ app.get("/",(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server Started on http://localhost:${port}`)
 })
-
-// mongodb+srv://adityamandavkar1:<db_password>@cluster0.z5guw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
