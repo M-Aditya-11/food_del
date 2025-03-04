@@ -3,7 +3,7 @@ import cors from "cors"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoutes.js"
 
-// App Config
+// App Configuration
 
 const app = express()
 const port = 4000
