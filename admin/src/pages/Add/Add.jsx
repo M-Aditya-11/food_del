@@ -5,6 +5,18 @@ import { assets } from '../../assets/assets'
 const Add = () => {
 
   const [image,setImage] = useState(false);
+  const [data,setData] = useState({
+    name:"",
+    description:"",
+    price:"",
+    category:"Salad"
+  })
+
+  const onChangeHandler = (event) =>{
+    const name = event.target.name;
+    const value = event.target.value;
+    setData(data=>({...data,[name]:value}))
+  }
 
   return (
     <div className='add'>
@@ -18,16 +30,16 @@ const Add = () => {
         </div>
         <div className="add-product-name flex-col">
           <p>Product Name</p>
-          <input type="text" name="name" placeholder='type here' required/>
+          <input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder='type here' required/>
         </div>
         <div className="add-product-description flex-col">
           <p>Product description</p>
-          <textarea name="description" rows="6" placeholder='Write content here' required/>
+          <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Write content here' required/>
         </div>
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product category</p>
-            <select name="category" >
+            <select onChange={onChangeHandler} value={data.category} name="category" >
               <option value="Salad">Salad</option>
               <option value="Rolls">Rolls</option>
               <option value="Desert">Desert</option>
@@ -40,7 +52,7 @@ const Add = () => {
           </div>
           <div className="add-price flex-col">
             <p>Product price</p>
-            <input type="text" name="price" placeholder='$20' required/>
+            <input onChange={onChangeHandler} value={data.price} type="text" name="price" placeholder='$20' required/>
           </div>
         </div>
         <button type='submit' className='add-btn'> ADD</button>
