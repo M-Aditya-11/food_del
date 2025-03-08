@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './Add.css'
 import { assets } from '../../assets/assets'
+import axios from 'axios'
 
 const Add = () => {
 
+  const url = "http://localhost:4000";
   const [image,setImage] = useState(false);
   const [data,setData] = useState({
     name:"",
@@ -18,9 +20,36 @@ const Add = () => {
     setData(data=>({...data,[name]:value}))
   }
 
+  const onSubmitHandler = async(event) =>{
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("name",data.name)
+    formData.append("description",data.description)
+    formData.append("price",Number(data.price))
+    formData.append("category",data.category)
+    formData.append("image",image)
+    
+    try {
+      const response = await axios.post(`${url}/api/food/add`, formData);
+      if (response.data.success) {
+        setData({
+          name: '',
+          description: '',
+          price: '',
+          category: 'Salad'
+        });
+        setImage(false);
+      } else {
+        console.error('Response error:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+
   return (
     <div className='add'>
-      <form className='flex-col'>
+      <form className='flex-col' onSubmit={onSubmitHandler}>
         <div className="add-img-upload flex-col">
           <p>Upload</p>
           <label htmlFor="image">
@@ -34,7 +63,7 @@ const Add = () => {
         </div>
         <div className="add-product-description flex-col">
           <p>Product description</p>
-          <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Write content here' required/>
+          <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Write content here'/>
         </div>
         <div className="add-category-price">
           <div className="add-category flex-col">
@@ -52,10 +81,10 @@ const Add = () => {
           </div>
           <div className="add-price flex-col">
             <p>Product price</p>
-            <input onChange={onChangeHandler} value={data.price} type="text" name="price" placeholder='$20' required/>
+            <input onChange={onChangeHandler} value={data.price} type="text" name="price" placeholder='$20'/>
           </div>
         </div>
-        <button type='submit' className='add-btn'> ADD</button>
+        <button type='submit' className='add-btn'>ADD</button>
       </form>
     </div>
   )
