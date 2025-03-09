@@ -10,12 +10,16 @@ const List = () => {
 
   const fetchList = async () => {
     const response = await axios.get(`${url}/api/food/list`);
-    console.log(response.data);
     if (response.data.success) {
       setList(response.data.data);
     }else{
       toast.error("Error");
     }
+  }
+
+  const removeFood = async(foodId) =>{
+    const response = await axios.post(`${url}/api/food/remove`,{id:foodId});
+    await fetchList();
   }
 
   useEffect(()=>{
@@ -40,7 +44,7 @@ const List = () => {
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>{item.price}</p>
-              <p className='curser'>X</p>
+              <p onClick={()=>removeFood(item._id)} className='curser'>X</p>
             </div>
           )
         })}
