@@ -7,7 +7,15 @@ const StoreContextProvider = (props) => {
 
     const [cartItems,setCartItems] = useState({});
     const url = "http://localhost:4000"
-    const [token,setToken] = useState("");
+    const [token,setToken] = useState(localStorage.getItem("token") || "");
+
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem("token", token);
+        } else {
+            localStorage.removeItem("token");
+        }
+    }, [token]);
 
     const addToCart = (itemId) => {
         if(!cartItems[itemId]){
