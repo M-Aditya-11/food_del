@@ -7,8 +7,9 @@ const StoreContextProvider = (props) => {
 
     const [cartItems,setCartItems] = useState({});
     const url = "http://localhost:4000"
-    const [token,setToken] = useState(localStorage.getItem("token") || "");
+    const [token,setToken] = useState(localStorage.getItem("token") || ""); // * by code reference from copilot
 
+    // code reference from copilot
     useEffect(() => {
         if (token) {
             localStorage.setItem("token", token);
