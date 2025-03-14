@@ -34,7 +34,6 @@ const PlaceOrder = () => {
         orderItems.push(itemInfo);
       }
     })
-    console.log(orderItems);
   }
 
   return (
