@@ -3,7 +3,20 @@ import userModel from '../models/userModel'
 // add items to user cart
 
 const addToCart = async(req,res) => {
-
+    try {
+        let userDta = await userModel.findOne({_id:req.body.userId});
+        let cartData = await userDta.cartData;
+        if (!cartData[req.body.itemId]) {
+            cartData[req.body.itemId] = 1;
+        } else {
+            cartData[req.body.itemId] += 1;
+        }
+        await userModel.findByIdAndUpdate(req.body.userId,{cartData});
+        res.json({success:true,message:"Added To Cart"});   
+    } catch (error) {
+        console.log(error);
+        res.json({success:flase,message:"Error"});
+    }
 }
 
 // remove items from user cart
