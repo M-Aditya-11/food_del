@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import helmet from "helmet"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoutes.js"
 import userRouter from "./routes/userRoutes.js"
@@ -16,11 +17,19 @@ const port = 4000
 app.use(express.json())
 app.use(cors())
 
-// Set Content Security Policy (CSP) headers
-app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://*.paypal.com https://*.paypalobjects.com; frame-src 'self' https://*.paypal.com; img-src 'self' data: https://*.paypal.com https://*.paypalobjects.com");
-    next();
-  });
+// Set Content Security Policy (CSP) headers using helmet
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://*.paypal.com", "https://*.paypalobjects.com"],
+        frameSrc: ["'self'", "https://*.paypal.com"],
+        imgSrc: ["'self'", "data:", "https://*.paypal.com", "https://*.paypalobjects.com"],
+      },
+    })
+  );
 
 // DB Connection
 
