@@ -16,6 +16,12 @@ const port = 4000
 app.use(express.json())
 app.use(cors())
 
+// Set Content Security Policy (CSP) headers
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://*.paypal.com https://*.paypalobjects.com; frame-src 'self' https://*.paypal.com; img-src 'self' data: https://*.paypal.com https://*.paypalobjects.com");
+    next();
+  });
+
 // DB Connection
 
 connectDB();
