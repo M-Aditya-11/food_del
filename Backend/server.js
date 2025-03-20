@@ -1,6 +1,5 @@
 import express from "express"
 import cors from "cors"
-import helmet from "helmet"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoutes.js"
 import userRouter from "./routes/userRoutes.js"
