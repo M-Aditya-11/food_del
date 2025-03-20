@@ -15,21 +15,7 @@ const port = 4000
 
 // Middleware
 app.use(express.json())
-app.use(cors())
-
-// Set Content Security Policy (CSP) headers using helmet
-app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://*.paypal.com", "https://*.paypalobjects.com"],
-        frameSrc: ["'self'", "https://*.paypal.com"],
-        imgSrc: ["'self'", "data:", "https://*.paypal.com", "https://*.paypalobjects.com"],
-      },
-    })
-  );
+app.use(cors());
 
 // DB Connection
 
