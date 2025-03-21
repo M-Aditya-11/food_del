@@ -1,3 +1,4 @@
+// filepath: c:\Users\Aditya Mandavkar\Projects\food_del\Backend\controllers\orderController.js
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import paypal from "paypal-rest-sdk";
@@ -25,7 +26,7 @@ const placeOrder = async (req, res) => {
       name: item.name,
       sku: item._id,
       price: item.price.toFixed(2),
-      currency: "USD", // Double-check this matches your sandbox merchant account
+      currency: "USD",
       quantity: item.quantity,
     }));
 
@@ -72,6 +73,7 @@ const placeOrder = async (req, res) => {
         if (approvalUrl) {
           res.json({ success: true, session_url: approvalUrl });
         } else {
+          console.error("No approval URL found in PayPal response:", JSON.stringify(payment, null, 2));
           res.json({ success: false, message: "No approval URL found" });
         }
       }

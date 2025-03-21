@@ -16,6 +16,12 @@ const port = 4000
 app.use(express.json())
 app.use(cors());
 
+// Set Content Security Policy headers
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.paypal.com https://www.sandbox.paypal.com;");
+    next();
+  });
+
 // DB Connection
 
 connectDB();
