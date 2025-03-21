@@ -25,12 +25,12 @@ const placeOrder = async (req, res) => {
     const items = req.body.items.map((item) => ({
       name: item.name,
       sku: item._id,
-      price: item.price.toFixed(2),
+      price: item.price,
       currency: "USD",
       quantity: item.quantity,
     }));
 
-    const deliveryCharge = 2.00.toFixed(2);
+    const deliveryCharge = 2;
     items.push({
       name: "Delivery Charges",
       sku: "delivery",
@@ -40,8 +40,7 @@ const placeOrder = async (req, res) => {
     });
 
     const totalAmount = items
-      .reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0)
-      .toFixed(2);
+      .reduce((total, item) => total + parseInt(item.price) * item.quantity, 0);
 
     console.log("Items:", JSON.stringify(items, null, 2));
     console.log("Total Amount:", totalAmount);
