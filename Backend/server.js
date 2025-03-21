@@ -1,4 +1,5 @@
 import express from "express"
+import helmet from "helmet"
 import cors from "cors"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoutes.js"
@@ -17,10 +18,18 @@ app.use(express.json())
 app.use(cors());
 
 // Set Content Security Policy headers
-app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.paypal.com https://www.sandbox.paypal.com;");
-    next();
-  });
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://www.paypal.com", "https://www.sandbox.paypal.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:", "https://www.paypal.com", "https://www.sandbox.paypal.com"],
+        connectSrc: ["'self'", "https://www.paypal.com", "https://www.sandbox.paypal.com"],
+      },
+    })
+  );
 
 // DB Connection
 
