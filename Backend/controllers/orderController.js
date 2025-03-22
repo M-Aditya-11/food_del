@@ -1,4 +1,3 @@
-// filepath: c:\Users\Aditya Mandavkar\Projects\food_del\Backend\controllers\orderController.js
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import paypal from "paypal-rest-sdk";
@@ -84,7 +83,7 @@ const placeOrder = async (req, res) => {
 };
 
 const verifyOrder = async(req,res) => {
-  const {orderId,success} = req.body;
+  const {success,orderId} = req.body;
   try {
     if (success=="true") {
       await orderModel.findByIdAndUpdate(orderId,{payment:"true"});
