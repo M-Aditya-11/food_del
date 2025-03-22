@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import './PlaceOrder.css'
 import { StoreContext } from '../../Context/StoreContext'
 import axios from 'axios'
-import { loadScript } from "@paypal/paypal-js"
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
 
 const PlaceOrder = () => {
 
